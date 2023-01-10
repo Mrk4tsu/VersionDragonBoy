@@ -560,6 +560,18 @@ public class GameCanvas : IActionListener
 				else if (panel.isShow)
 				{
 					panel.update();
+					if (isPointer(panel.X, panel.Y, panel.W, panel.H))
+					{
+						isFocusPanel2 = false;
+					}
+					if (panel2 != null && panel2.isShow)
+					{
+						panel2.update();
+						if (isPointer(panel2.X, panel2.Y, panel2.W, panel2.H))
+						{
+							isFocusPanel2 = true;
+						}
+					}
 					if (panel2 != null)
 					{
 						if (isFocusPanel2)
@@ -569,14 +581,6 @@ public class GameCanvas : IActionListener
 						else
 						{
 							panel.updateKey();
-						}
-						if (panel2.isShow)
-						{
-							panel2.update();
-							if (isPointer(panel2.X, panel2.Y, panel2.W, panel2.H))
-							{
-								panel2.updateKey();
-							}
 						}
 					}
 					else
@@ -590,6 +594,14 @@ public class GameCanvas : IActionListener
 					else if (panel2 != null && panel2.chatTField != null && panel2.chatTField.isShow)
 					{
 						panel2.chatTFUpdateKey();
+					}
+					else if ((isPointer(panel.X, panel.Y, panel.W, panel.H) && panel2 != null) || panel2 == null)
+					{
+						panel.updateKey();
+					}
+					else if (panel2 != null && panel2.isShow && isPointer(panel2.X, panel2.Y, panel2.W, panel2.H))
+					{
+						panel2.updateKey();
 					}
 					if (isPointer(panel.X + panel.W, panel.Y, w - panel.W * 2, panel.H) && isPointerJustRelease && panel.isDoneCombine)
 					{
@@ -1312,6 +1324,8 @@ public class GameCanvas : IActionListener
 		}
 		catch (Exception)
 		{
+			g.setColor(0);
+			g.fillRect(0, 0, w, h);
 		}
 	}
 
@@ -1321,108 +1335,119 @@ public class GameCanvas : IActionListener
 
 	public static void getYBackground(int typeBg)
 	{
-		int gH = GameScr.gH23;
-		switch (typeBg)
+		try
 		{
-		case 0:
-			yb[0] = gH - bgH[0] + 70;
-			yb[1] = yb[0] - bgH[1] + 20;
-			yb[2] = yb[1] - bgH[2] + 30;
-			yb[3] = yb[2] - bgH[3] + 50;
-			break;
-		case 1:
-			yb[0] = gH - bgH[0] + 120;
-			yb[1] = yb[0] - bgH[1] + 40;
-			yb[2] = yb[1] - 90;
-			yb[3] = yb[2] - 25;
-			break;
-		case 2:
-			yb[0] = gH - bgH[0] + 150;
-			yb[1] = yb[0] - bgH[1] - 60;
-			yb[2] = yb[1] - bgH[2] - 40;
-			yb[3] = yb[2] - bgH[3] - 10;
-			yb[4] = yb[3] - bgH[4];
-			break;
-		case 3:
-			yb[0] = gH - bgH[0] + 10;
-			yb[1] = yb[0] + 80;
-			yb[2] = yb[1] - bgH[2] - 10;
-			break;
-		case 4:
-			yb[0] = gH - bgH[0] + 130;
-			yb[1] = yb[0] - bgH[1];
-			yb[2] = yb[1] - bgH[2] - 20;
-			yb[3] = yb[1] - bgH[2] - 80;
-			break;
-		case 5:
-			yb[0] = gH - bgH[0] + 40;
-			yb[1] = yb[0] - bgH[1] + 10;
-			yb[2] = yb[1] - bgH[2] + 15;
-			yb[3] = yb[2] - bgH[3] + 50;
-			break;
-		case 6:
-			yb[0] = gH - bgH[0] + 100;
-			yb[1] = yb[0] - bgH[1] - 30;
-			yb[2] = yb[1] - bgH[2] + 10;
-			yb[3] = yb[2] - bgH[3] + 15;
-			yb[4] = yb[3] - bgH[4] + 15;
-			break;
-		case 7:
-			yb[0] = gH - bgH[0] + 20;
-			yb[1] = yb[0] - bgH[1] + 15;
-			yb[2] = yb[1] - bgH[2] + 20;
-			yb[3] = yb[1] - bgH[2] - 10;
-			break;
-		case 8:
-			yb[0] = gH - 103 + 150;
-			if (TileMap.mapID == 103)
+			int gH = GameScr.gH23;
+			switch (typeBg)
 			{
-				yb[0] -= 100;
+			case 0:
+				yb[0] = gH - bgH[0] + 70;
+				yb[1] = yb[0] - bgH[1] + 20;
+				yb[2] = yb[1] - bgH[2] + 30;
+				yb[3] = yb[2] - bgH[3] + 50;
+				break;
+			case 1:
+				yb[0] = gH - bgH[0] + 120;
+				yb[1] = yb[0] - bgH[1] + 40;
+				yb[2] = yb[1] - 90;
+				yb[3] = yb[2] - 25;
+				break;
+			case 2:
+				yb[0] = gH - bgH[0] + 150;
+				yb[1] = yb[0] - bgH[1] - 60;
+				yb[2] = yb[1] - bgH[2] - 40;
+				yb[3] = yb[2] - bgH[3] - 10;
+				yb[4] = yb[3] - bgH[4];
+				break;
+			case 3:
+				yb[0] = gH - bgH[0] + 10;
+				yb[1] = yb[0] + 80;
+				yb[2] = yb[1] - bgH[2] - 10;
+				break;
+			case 4:
+				yb[0] = gH - bgH[0] + 130;
+				yb[1] = yb[0] - bgH[1];
+				yb[2] = yb[1] - bgH[2] - 20;
+				yb[3] = yb[1] - bgH[2] - 80;
+				break;
+			case 5:
+				yb[0] = gH - bgH[0] + 40;
+				yb[1] = yb[0] - bgH[1] + 10;
+				yb[2] = yb[1] - bgH[2] + 15;
+				yb[3] = yb[2] - bgH[3] + 50;
+				break;
+			case 6:
+				yb[0] = gH - bgH[0] + 100;
+				yb[1] = yb[0] - bgH[1] - 30;
+				yb[2] = yb[1] - bgH[2] + 10;
+				yb[3] = yb[2] - bgH[3] + 15;
+				yb[4] = yb[3] - bgH[4] + 15;
+				break;
+			case 7:
+				yb[0] = gH - bgH[0] + 20;
+				yb[1] = yb[0] - bgH[1] + 15;
+				yb[2] = yb[1] - bgH[2] + 20;
+				yb[3] = yb[1] - bgH[2] - 10;
+				break;
+			case 8:
+				yb[0] = gH - 103 + 150;
+				if (TileMap.mapID == 103)
+				{
+					yb[0] -= 100;
+				}
+				yb[1] = yb[0] - bgH[1] - 10;
+				yb[2] = yb[1] - bgH[2] + 40;
+				yb[3] = yb[2] - bgH[3] + 10;
+				break;
+			case 9:
+				yb[0] = gH - bgH[0] + 100;
+				yb[1] = yb[0] - bgH[1] + 22;
+				yb[2] = yb[1] - bgH[2] + 50;
+				yb[3] = yb[2] - bgH[3];
+				break;
+			case 10:
+				yb[0] = gH - bgH[0] - 45;
+				yb[1] = yb[0] - bgH[1] - 10;
+				break;
+			case 11:
+				yb[0] = gH - bgH[0] + 60;
+				yb[1] = yb[0] - bgH[1] + 5;
+				yb[2] = yb[1] - bgH[2] - 15;
+				break;
+			case 12:
+				yb[0] = gH + 40;
+				yb[1] = yb[0] - 40;
+				yb[2] = yb[1] - 40;
+				break;
+			case 13:
+				yb[0] = gH - 80;
+				yb[1] = yb[0];
+				break;
+			case 15:
+				yb[0] = gH - 20;
+				yb[1] = yb[0] - 80;
+				break;
+			case 16:
+				yb[0] = gH - bgH[0] + 75;
+				yb[1] = yb[0] - bgH[1] + 50;
+				yb[2] = yb[1] - bgH[2] + 50;
+				yb[3] = yb[2] - bgH[3] + 90;
+				break;
+			default:
+				yb[0] = gH - bgH[0] + 75;
+				yb[1] = yb[0] - bgH[1] + 50;
+				yb[2] = yb[1] - bgH[2] + 50;
+				yb[3] = yb[2] - bgH[3] + 90;
+				break;
 			}
-			yb[1] = yb[0] - bgH[1] - 10;
-			yb[2] = yb[1] - bgH[2] + 40;
-			yb[3] = yb[2] - bgH[3] + 10;
-			break;
-		case 9:
-			yb[0] = gH - bgH[0] + 100;
-			yb[1] = yb[0] - bgH[1] + 22;
-			yb[2] = yb[1] - bgH[2] + 50;
-			yb[3] = yb[2] - bgH[3];
-			break;
-		case 10:
-			yb[0] = gH - bgH[0] - 45;
-			yb[1] = yb[0] - bgH[1] - 10;
-			break;
-		case 11:
-			yb[0] = gH - bgH[0] + 60;
-			yb[1] = yb[0] - bgH[1] + 5;
-			yb[2] = yb[1] - bgH[2] - 15;
-			break;
-		case 12:
-			yb[0] = gH + 40;
-			yb[1] = yb[0] - 40;
-			yb[2] = yb[1] - 40;
-			break;
-		case 13:
-			yb[0] = gH - 80;
-			yb[1] = yb[0];
-			break;
-		case 15:
-			yb[0] = gH - 20;
-			yb[1] = yb[0] - 80;
-			break;
-		case 16:
-			yb[0] = gH - bgH[0] + 75;
-			yb[1] = yb[0] - bgH[1] + 50;
-			yb[2] = yb[1] - bgH[2] + 50;
-			yb[3] = yb[2] - bgH[3] + 90;
-			break;
-		default:
-			yb[0] = gH - bgH[0] + 75;
-			yb[1] = yb[0] - bgH[1] + 50;
-			yb[2] = yb[1] - bgH[2] + 50;
-			yb[3] = yb[2] - bgH[3] + 90;
-			break;
+		}
+		catch (Exception)
+		{
+			int gH2 = GameScr.gH23;
+			for (int i = 0; i < yb.Length; i++)
+			{
+				yb[i] = 1;
+			}
 		}
 	}
 
@@ -1536,7 +1561,7 @@ public class GameCanvas : IActionListener
 				nBg = 4;
 				break;
 			}
-			if (typeBG < 16)
+			if (typeBG <= 16)
 			{
 				skyColor = StaticObj.SKYCOLOR[typeBg];
 			}
@@ -1559,6 +1584,13 @@ public class GameCanvas : IActionListener
 					skyColor = StaticObj.SKYCOLOR[StaticObj.SKYCOLOR.Length - 1];
 				}
 			}
+			colorTop = new int[StaticObj.SKYCOLOR.Length];
+			colorBotton = new int[StaticObj.SKYCOLOR.Length];
+			for (int i = 0; i < StaticObj.SKYCOLOR.Length; i++)
+			{
+				colorTop[i] = StaticObj.SKYCOLOR[i];
+				colorBotton[i] = StaticObj.SKYCOLOR[i];
+			}
 			if (lowGraphic)
 			{
 				tam = loadImageRMS("/bg/b63.png");
@@ -1575,45 +1607,16 @@ public class GameCanvas : IActionListener
 				imgBG[1] = loadImageRMS("/bg/b100.png");
 				imgBG[2] = loadImageRMS("/bg/b82-1.png");
 				imgBG[3] = loadImageRMS("/bg/b93.png");
-				for (int i = 0; i < nBg; i++)
-				{
-					if (imgBG[i] != null)
-					{
-						int[] data2 = new int[1];
-						imgBG[i].getRGB(ref data2, 0, 1, mGraphics.getRealImageWidth(imgBG[i]) / 2, 0, 1, 1);
-						colorTop[i] = data2[0];
-						data2 = new int[1];
-						imgBG[i].getRGB(ref data2, 0, 1, mGraphics.getRealImageWidth(imgBG[i]) / 2, mGraphics.getRealImageHeight(imgBG[i]) - 1, 1, 1);
-						colorBotton[i] = data2[0];
-						bgW[i] = mGraphics.getImageWidth(imgBG[i]);
-						bgH[i] = mGraphics.getImageHeight(imgBG[i]);
-					}
-					else if (nBg > 1)
-					{
-						imgBG[i] = loadImageRMS("/bg/b" + typeBg + "0.png");
-						bgW[i] = mGraphics.getImageWidth(imgBG[i]);
-						bgH[i] = mGraphics.getImageHeight(imgBG[i]);
-					}
-				}
-			}
-			else
-			{
 				for (int j = 0; j < nBg; j++)
 				{
-					string path2 = "/bg/b" + typeBg + j + ".png";
-					if (TileMap.bgType != 0)
-					{
-						path2 = "/bg/b" + typeBg + j + "-" + TileMap.bgType + ".png";
-					}
-					imgBG[j] = loadImageRMS(path2);
 					if (imgBG[j] != null)
 					{
-						int[] data3 = new int[1];
-						imgBG[j].getRGB(ref data3, 0, 1, mGraphics.getRealImageWidth(imgBG[j]) / 2, 0, 1, 1);
-						colorTop[j] = data3[0];
-						data3 = new int[1];
-						imgBG[j].getRGB(ref data3, 0, 1, mGraphics.getRealImageWidth(imgBG[j]) / 2, mGraphics.getRealImageHeight(imgBG[j]) - 1, 1, 1);
-						colorBotton[j] = data3[0];
+						int[] data2 = new int[1];
+						imgBG[j].getRGB(ref data2, 0, 1, mGraphics.getRealImageWidth(imgBG[j]) / 2, 0, 1, 1);
+						colorTop[j] = data2[0];
+						data2 = new int[1];
+						imgBG[j].getRGB(ref data2, 0, 1, mGraphics.getRealImageWidth(imgBG[j]) / 2, mGraphics.getRealImageHeight(imgBG[j]) - 1, 1, 1);
+						colorBotton[j] = data2[0];
 						bgW[j] = mGraphics.getImageWidth(imgBG[j]);
 						bgH[j] = mGraphics.getImageHeight(imgBG[j]);
 					}
@@ -1622,6 +1625,35 @@ public class GameCanvas : IActionListener
 						imgBG[j] = loadImageRMS("/bg/b" + typeBg + "0.png");
 						bgW[j] = mGraphics.getImageWidth(imgBG[j]);
 						bgH[j] = mGraphics.getImageHeight(imgBG[j]);
+					}
+				}
+			}
+			else
+			{
+				for (int k = 0; k < nBg; k++)
+				{
+					string path2 = "/bg/b" + typeBg + k + ".png";
+					if (TileMap.bgType != 0)
+					{
+						path2 = "/bg/b" + typeBg + k + "-" + TileMap.bgType + ".png";
+					}
+					imgBG[k] = loadImageRMS(path2);
+					if (imgBG[k] != null)
+					{
+						int[] data3 = new int[1];
+						imgBG[k].getRGB(ref data3, 0, 1, mGraphics.getRealImageWidth(imgBG[k]) / 2, 0, 1, 1);
+						colorTop[k] = data3[0];
+						data3 = new int[1];
+						imgBG[k].getRGB(ref data3, 0, 1, mGraphics.getRealImageWidth(imgBG[k]) / 2, mGraphics.getRealImageHeight(imgBG[k]) - 1, 1, 1);
+						colorBotton[k] = data3[0];
+						bgW[k] = mGraphics.getImageWidth(imgBG[k]);
+						bgH[k] = mGraphics.getImageHeight(imgBG[k]);
+					}
+					else if (nBg > 1)
+					{
+						imgBG[k] = loadImageRMS("/bg/b" + typeBg + "0.png");
+						bgW[k] = mGraphics.getImageWidth(imgBG[k]);
+						bgH[k] = mGraphics.getImageHeight(imgBG[k]);
 					}
 				}
 			}
@@ -1729,14 +1761,14 @@ public class GameCanvas : IActionListener
 							yb[2] - 40
 						};
 						imgSunSpec = new Image[7];
-						for (int k = 0; k < imgSunSpec.Length; k++)
+						for (int l = 0; l < imgSunSpec.Length; l++)
 						{
 							int num = 161;
-							if (k == 0 || k == 2 || k == 3 || k == 2 || k == 6)
+							if (l == 0 || l == 2 || l == 3 || l == 2 || l == 6)
 							{
 								num = 160;
 							}
-							imgSunSpec[k] = loadImageRMS("/bg/sun" + num + ".png");
+							imgSunSpec[l] = loadImageRMS("/bg/sun" + num + ".png");
 						}
 						break;
 					}

@@ -2,6 +2,7 @@ public class T3 : mResources
 {
 	public static void load()
 	{
+		mResources.delacc = "Delete account";
 		mResources.notiINAPP = "Anda membeli banyak permata hari ini. Mari kita coba lagi besok!";
 		mResources.notiRuby = "Saat menjual dengan sukses, Anda akan menerima Ruby non Gem. Apakah Anda ingin melanjutkan menyerahkan?";
 		mResources.equip = "Mengalati";
@@ -17,7 +18,7 @@ public class T3 : mResources
 		mResources.gameInfo = "Pemberitahuan";
 		mResources.useGem = "Auto terlahir kembali";
 		mResources.autoFunction = "Auto fungsi";
-		mResources.sure_fusion = "Apakah kamu yakin fusion selamanya dengan muridmu? Kamu akan kehilangan muridmu, dan semua power muridmu kan ditambahkan ke potensial anda";
+		mResources.sure_fusion = "Apakah kamu yakin fusion selamanya dengan muridmu? Kamu akan kehilangan muridmu dan perlengkapan semua murid, dan semua power muridmu kan ditambahkan ke potensial anda";
 		mResources.fusionForever = "Fusion selama-lamanya";
 		mResources.fusion = "Fusion dance";
 		mResources.nhanngoc = "Receive gem";
@@ -303,6 +304,8 @@ public class T3 : mResources
 		mResources.serverchat_on = "Hidupkan pemberitahuan Server";
 		mResources.aura_on = "Nyalakan aura khusus";
 		mResources.aura_off = "Matikan aura khusus";
+		mResources.hat_on = "Tampilkan aksesoris";
+		mResources.hat_off = "Sembunyikan aksesoris";
 		mResources.x1Screen = "Layar kecil";
 		mResources.x2Screen = "Layar besar";
 		mResources.changeSizeScreen = "Apakah kamu ingin keluar untuk merubah ukuran layar?";

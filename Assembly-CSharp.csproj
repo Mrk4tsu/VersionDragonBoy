@@ -12,7 +12,7 @@
   <ItemGroup />
   <ItemGroup>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\Dragonboy_vn_v214 (1)\Dragonboy_vn_v214_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

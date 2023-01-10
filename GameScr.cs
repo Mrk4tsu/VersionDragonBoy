@@ -4717,7 +4717,7 @@ public class GameScr : mScreen, IChatable
 				bgItem.paint(g);
 			}
 		}
-		if (TileMap.mapID == 48 && layer == 3 && !GameCanvas.lowGraphic && GameCanvas.bgW != null && GameCanvas.bgW[0] != 0)
+		if (TileMap.mapID == 48 && layer == 3 && GameCanvas.bgW != null && GameCanvas.bgW[0] != 0)
 		{
 			for (int j = 0; j < TileMap.pxw / GameCanvas.bgW[0] + 1; j++)
 			{
@@ -5743,16 +5743,7 @@ public class GameScr : mScreen, IChatable
 	private void paintInfoBar(mGraphics g)
 	{
 		resetTranslate(g);
-		if (isVS() && Char.myCharz().charFocus != null)
-		{
-			g.translate(GameCanvas.w / 2 - 62, 0);
-			paintImageBar(g, isLeft: true, Char.myCharz().charFocus);
-			g.translate(-(GameCanvas.w / 2 - 65), 0);
-			paintImageBarRight(g, Char.myCharz());
-			Char.myCharz().paintHeadWithXY(g, 15, 20, 0);
-			Char.myCharz().charFocus.paintHeadWithXY(g, GameCanvas.w - 15, 20, 2);
-		}
-		else if (TileMap.mapID == 130 && findCharVS1() != null && findCharVS2() != null)
+		if (TileMap.mapID == 130 && findCharVS1() != null && findCharVS2() != null)
 		{
 			g.translate(GameCanvas.w / 2 - 62, 0);
 			paintImageBar(g, isLeft: true, findCharVS1());
@@ -5760,6 +5751,15 @@ public class GameScr : mScreen, IChatable
 			paintImageBarRight(g, findCharVS2());
 			findCharVS1().paintHeadWithXY(g, 15, 20, 0);
 			findCharVS2().paintHeadWithXY(g, GameCanvas.w - 15, 20, 2);
+		}
+		else if (isVS() && Char.myCharz().charFocus != null)
+		{
+			g.translate(GameCanvas.w / 2 - 62, 0);
+			paintImageBar(g, isLeft: true, Char.myCharz().charFocus);
+			g.translate(-(GameCanvas.w / 2 - 65), 0);
+			paintImageBarRight(g, Char.myCharz());
+			Char.myCharz().paintHeadWithXY(g, 15, 20, 0);
+			Char.myCharz().charFocus.paintHeadWithXY(g, GameCanvas.w - 15, 20, 2);
 		}
 		else if (ispaintPhubangBar() && isSmallScr())
 		{
@@ -5827,7 +5827,7 @@ public class GameScr : mScreen, IChatable
 
 	public bool isVS()
 	{
-		if ((TileMap.mapID == 130 || TileMap.mapID == 51 || TileMap.mapID == 112 || TileMap.mapID == 113 || TileMap.mapID == 129) && (Char.myCharz().cTypePk != 0 || (TileMap.mapID == 130 && findCharVS1() != null && findCharVS2() != null)))
+		if (TileMap.isVoDaiMap() && (Char.myCharz().cTypePk != 0 || (TileMap.mapID == 130 && findCharVS1() != null && findCharVS2() != null)))
 		{
 			return true;
 		}
@@ -6835,7 +6835,7 @@ public class GameScr : mScreen, IChatable
 			xTG = (xF = GameCanvas.w - 45);
 			if (gamePad.isLargeGamePad)
 			{
-				xSkill = gamePad.wZone - 20;
+				xSkill = gamePad.wZone + 20;
 				wSkill = 35;
 				xHP = xF - 45;
 			}
