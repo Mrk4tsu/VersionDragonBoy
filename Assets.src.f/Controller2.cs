@@ -470,8 +470,8 @@ namespace Assets.src.f
 					break;
 				case -113:
 				{
-					sbyte[] array10 = new sbyte[5];
-					for (int num35 = 0; num35 < 5; num35++)
+					sbyte[] array10 = new sbyte[10];
+					for (int num35 = 0; num35 < 10; num35++)
 					{
 						array10[num35] = msg.reader().readByte();
 						Res.outz("vlue i= " + array10[num35]);
